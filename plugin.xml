@@ -16,18 +16,35 @@
   </engines>
 
   <js-module src="www/device.js" name="device">
-      <clobbers target="window.TencentYsdk" />
+      <clobbers target="TencentYSDKPlugin" />
   </js-module>
 
   <!-- android -->
   <platform name="android">
+    <config-file parent="/*" target="res/xml/config.xml">
+        <feature name="TencentYSDKPlugin">
+            <param name="android-package" value="cordova.plugin.ysdk.TencentYSDKPlugin" />
+            <param name="onload" value="true"/>
+        </feature>
+    </config-file>
+
     <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
       <uses-permission android:name="android.permission.READ_LOGS" />
+      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+      <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <meta-data
+            android:name="MAIN_ACTIVITY"
+            android:value="${applicationId}.MainActivity"/>
     </config-file>
 
     <!-- <source-file src="src/android/assets/MidasPay.zip" target-dir="../assets"/> -->
-    <source-file src="src/android/MobiYsdk.java" target-dir="src/cordova/plugin/ysdk"/>
-    <source-file src="src/android/YSDKCallback.java" target-dir="src/cordova/plugin/ysdk"/>
+    <source-file src="src/android/TencentYSDKPlugin.java" target-dir="src/cordova/plugin/ysdk"/>
     <source-file src="src/android/assets/ysdkconf.ini" target-dir="../assets"/>
 
     <lib-file src="src/android/libs/YSDK_Android_1.8.3.aar"/>
