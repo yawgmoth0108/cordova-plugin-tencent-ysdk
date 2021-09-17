@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  id="cordova-plugin-tencent-ysdk"
+  version="1.0.0">
+  <name>Device</name>
+  <description>cordova plugin tencent ysdk</description>
+  <license>MIT</license>
+  <keywords>cordova,ysdk</keywords>
+  <repo>https://github.com/yawgmoth0108/cordova-plugin-tencent-ysdk</repo>
+  <issue>https://github.com/yawgmoth0108/cordova-plugin-tencent-ysdk/issues</issue>
+
+  <engines>
+    <engine name="cordova" version=">=9.0.0"/>
+    <engine name="cordova-android" version=">=9.0.0"/>
+  </engines>
+
+  <js-module src="www/device.js" name="device">
+      <clobbers target="window.TencentYsdk" />
+  </js-module>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.READ_LOGS" />
+    </config-file>
+
+    <!-- <source-file src="src/android/assets/MidasPay.zip" target-dir="../assets"/> -->
+    <source-file src="src/android/MobiYsdk.java" target-dir="src/cordova/plugin/ysdk"/>
+    <source-file src="src/android/YSDKCallback.java" target-dir="src/cordova/plugin/ysdk"/>
+    <source-file src="src/android/assets/ysdkconf.ini" target-dir="../assets"/>
+
+    <lib-file src="src/android/libs/YSDK_Android_1.8.1.aar"/>
+    <lib-file src="src/android/libs/ysdkshell.aar"/>
+
+    <framework src="src/android/build.gradle" custom="true" type="gradleReference"/>
+  </platform>
+
+  <!-- 其他平台的代码 -->
+</plugin>

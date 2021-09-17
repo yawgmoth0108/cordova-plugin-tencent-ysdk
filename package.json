@@ -1,0 +1,13 @@
+{
+  "name": "cordova-plugin-tencent-ysdk",
+  "version": "1.0.1",
+  "description": "cordova plugin tencent ysdk",
+  "cordova": {
+    "id": "cordova-plugin-tencent-ysdk",
+    "platforms": [
+      "android"
+    ]
+  },
+  "author": "xu he",
+  "license": "ISC"
+}
