@@ -56,7 +56,14 @@ public class TencentYSDKPlugin extends CordovaPlugin {
         public void OnLoginNotify(UserLoginRet userLoginRet) {
           Log.d("ysdk", "onlogin not ify" + userLoginRet.ret);
 //          callbackContext.success();
-          SendCallback(callbackContext,"onLogin",new JSONObject());
+          JSONObject param = new JSONObject();
+          try {
+            param.put("ret", userLoginRet.ret);
+            param.put("flag", userLoginRet.flag);
+          } catch (JSONException e) {
+            e.printStackTrace();
+          }
+          SendCallback(callbackContext,"onLogin", param);
         }
 
         @Override
