@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
   xmlns:android="http://schemas.android.com/apk/res/android"
   id="cordova-plugin-tencent-ysdk"
-  version="1.0.0">
+  version="1.1.1">
   <name>Device</name>
   <description>cordova plugin tencent ysdk</description>
   <license>MIT</license>
@@ -30,7 +30,7 @@
     <source-file src="src/android/YSDKCallback.java" target-dir="src/cordova/plugin/ysdk"/>
     <source-file src="src/android/assets/ysdkconf.ini" target-dir="../assets"/>
 
-    <lib-file src="src/android/libs/YSDK_Android_1.8.1.aar"/>
+    <lib-file src="src/android/libs/YSDK_Android_1.8.3.aar"/>
     <lib-file src="src/android/libs/ysdkshell.aar"/>
 
     <framework src="src/android/build.gradle" custom="true" type="gradleReference"/>
