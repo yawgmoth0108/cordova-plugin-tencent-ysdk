@@ -45,7 +45,7 @@
 
     <!-- <source-file src="src/android/assets/MidasPay.zip" target-dir="../assets"/> -->
     <source-file src="src/android/TencentYSDKPlugin.java" target-dir="src/cordova/plugin/ysdk"/>
-    <source-file src="src/android/assets/ysdkconf.ini" target-dir="../assets"/>
+    <source-file src="src/android/assets/ysdkconf.ini" target-dir="assets"/>
 
     <lib-file src="src/android/libs/YSDK_Android_1.8.3.aar"/>
     <lib-file src="src/android/libs/ysdkshell.aar"/>

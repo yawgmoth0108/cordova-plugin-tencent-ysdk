@@ -27,7 +27,18 @@ public class TencentYSDKPlugin extends CordovaPlugin {
   @Override
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
-    YSDKApi.init();
+    try {
+      YSDKApi.init();
+      YSDKApi.showDebugIcon(cordova.getActivity());
+    } catch (Exception e) {
+      Log.d("ysdk error", e.toString());
+    }
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    super.onActivityResult(requestCode, resultCode, intent);
+    YSDKApi.onActivityResult(requestCode, resultCode, intent);
   }
 
   @Override
@@ -35,9 +46,8 @@ public class TencentYSDKPlugin extends CordovaPlugin {
           String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
     JSONObject jsonObject = args.getJSONObject(0);
-    // 展示开屏广告
+    // ysdk init
     if ("initYSDK".equals(action)) {
-
       YSDKApi.setUserListener(new UserListener() {
         @Override
         public void OnLoginNotify(UserLoginRet userLoginRet) {
@@ -54,7 +64,6 @@ public class TencentYSDKPlugin extends CordovaPlugin {
           SendCallback(callbackContext,"onRelation",new JSONObject());
         }
       });
-      YSDKApi.login(ePlatform.Guest);
       return true;
     }
     return false;
