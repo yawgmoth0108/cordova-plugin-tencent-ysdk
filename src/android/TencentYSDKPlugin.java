@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.tencent.ysdk.api.YSDKApi;
 import com.tencent.ysdk.framework.common.BaseRet;
+import com.tencent.ysdk.module.antiaddiction.listener.AntiAddictListener;
+import com.tencent.ysdk.module.antiaddiction.model.AntiAddictRet;
 import com.tencent.ysdk.module.user.UserListener;
 
 import org.apache.cordova.CallbackContext;
@@ -28,8 +30,8 @@ public class TencentYSDKPlugin extends CordovaPlugin {
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
     try {
-      YSDKApi.init();
-      YSDKApi.showDebugIcon(cordova.getActivity());
+      YSDKApi.init(false);
+//      YSDKApi.showDebugIcon(cordova.getActivity());
     } catch (Exception e) {
       Log.d("ysdk error", e.toString());
     }
@@ -46,11 +48,14 @@ public class TencentYSDKPlugin extends CordovaPlugin {
           String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
     JSONObject jsonObject = args.getJSONObject(0);
-    // ysdk init
+    // 展示开屏广告
     if ("initYSDK".equals(action)) {
+      Log.d("ysdk init", "init");
       YSDKApi.setUserListener(new UserListener() {
         @Override
         public void OnLoginNotify(UserLoginRet userLoginRet) {
+          Log.d("ysdk", "onlogin not ify" + userLoginRet.ret);
+//          callbackContext.success();
           SendCallback(callbackContext,"onLogin",new JSONObject());
         }
 
@@ -64,18 +69,30 @@ public class TencentYSDKPlugin extends CordovaPlugin {
           SendCallback(callbackContext,"onRelation",new JSONObject());
         }
       });
+      YSDKApi.setAntiAddictListener(new AntiAddictListener() {
+        @Override
+        public void onLoginLimitNotify(AntiAddictRet antiAddictRet) {
+          SendCallback(callbackContext,"onLoginLimit",new JSONObject());
+        }
+
+        @Override
+        public void onTimeLimitNotify(AntiAddictRet antiAddictRet) {
+          SendCallback(callbackContext,"onTimeLimit",new JSONObject());
+        }
+      });
+      YSDKApi.login(ePlatform.Guest);
       return true;
     }
     return false;
   }
 
   private void SendCallback(CallbackContext callbackContext, String event, JSONObject param) {
-    PluginResult result = new PluginResult(PluginResult.Status.OK, param);
-    result.setKeepCallback(true);
     try {
       param.put("type", event);
     }catch (Exception e) {
     }
+    PluginResult result = new PluginResult(PluginResult.Status.OK, param);
+    result.setKeepCallback(true);
     callbackContext.sendPluginResult(result);
   }
 
