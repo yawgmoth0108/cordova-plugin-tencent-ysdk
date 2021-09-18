@@ -4,7 +4,7 @@ var channel = require('cordova/channel');
 
 /**
  * 事件说明
- * onLogin     
+ * onLogin
  * onWakeup
  * onRelation
  */
@@ -38,6 +38,16 @@ YSDK.init = function() {
     base._eventHandler(eventname);
   };
   exec(cb, cb, 'TencentYSDKPlugin', 'initYSDK', [options]);
+  return base;
+}
+
+YSDK.login = function() {
+  var options = {};
+  var base = new YSDK();
+  var cb = function(eventname) {
+    base._eventHandler(eventname);
+  };
+  exec(cb, cb, 'TencentYSDKPlugin', 'doLogin', [options]);
   return base;
 }
 

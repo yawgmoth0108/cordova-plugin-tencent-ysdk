@@ -49,6 +49,11 @@ public class TencentYSDKPlugin extends CordovaPlugin {
 
     JSONObject jsonObject = args.getJSONObject(0);
     // 展示开屏广告
+    if ("doLogin".equals(action)) {
+      Log.d("ysdk login", "login");
+      YSDKApi.login(ePlatform.Guest);
+      return true;
+    }
     if ("initYSDK".equals(action)) {
       Log.d("ysdk init", "init");
       YSDKApi.setUserListener(new UserListener() {
@@ -87,7 +92,6 @@ public class TencentYSDKPlugin extends CordovaPlugin {
           SendCallback(callbackContext,"onTimeLimit",new JSONObject());
         }
       });
-      YSDKApi.login(ePlatform.Guest);
       return true;
     }
     return false;
